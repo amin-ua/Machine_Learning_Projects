@@ -1,0 +1,2 @@
+The dataset is based on the Shopping Cart Database in Kaggle:
+https://www.kaggle.com/datasets/ruchi798/shopping-cart-database?resource=download
