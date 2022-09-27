@@ -1,0 +1,53 @@
+Creating tables in PostgreSQL
+CREATE TABLE sales.customers
+(
+    customer_id serial NOT NULL,
+    customer_name character varying(100),
+    gender character varying(50),
+    age integer,
+    home_address character varying(100),
+    zip_code integer,
+    city character varying(100),
+    state character varying(50),
+    country character varying(50),
+    PRIMARY KEY (customer_id)
+);
+
+
+CREATE TABLE sales.sales
+(
+    sales_id serial NOT NULL,
+    order_id integer,
+    product_id integer,
+    price_per_unit integer,
+    quantity integer,
+    total_price integer,
+    PRIMARY KEY (sales_id)
+);
+
+
+CREATE TABLE sales.products
+(
+    "product_ID" serial NOT NULL,
+    product_type character varying(100),
+    product_name character varying(100),
+    size character varying(50),
+    colour character varying(50),
+    price numeric,
+    quantity integer,
+    description character varying(1000),
+    PRIMARY KEY ("product_ID")
+);
+
+
+
+
+Clustering Input
+
+SELECT c.customer_id, c.customer_name, c.gender, c.age, c.state, SUM(s.quantity) AS quantity, SUM(s.total_price) AS total_price 
+ FROM sales.customers c 
+ LEFT OUTER JOIN sales.orders o ON o.customer_id = c.customer_id
+ LEFT OUTER JOIN sales.sales s ON o.order_id= s.order_id
+ GROUP BY c.customer_id
+ HAVING SUM(s.total_price) IS NOT NULL
+ ;
